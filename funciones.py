@@ -1,5 +1,5 @@
 import random
-
+import validaciones
 
 
 def tirar_dados(numero_de_dados, cara_inicial, cara_final):
@@ -21,14 +21,18 @@ def elegir_dados(lista_auxiliar):
 
     dados_elegidos = []
     
-    for i in range(len(lista_auxiliar)):
+    for i in range(len(lista_auxiliar)):  
+
         posicion = input("Ingrese posicion que desea conservar, o ENTER para no conservar: ")
 
         if not posicion.isdigit():
 
             return dados_elegidos
+        
+        posicion = validaciones.validar_posicion(int(posicion), 0, len(lista_auxiliar)-1)
+    
 
-        dados_elegidos.append(lista_auxiliar[int(posicion)])
+        dados_elegidos.append(lista_auxiliar[posicion])
         print(f"los elegidos son: {dados_elegidos}")
 
     return dados_elegidos
@@ -45,11 +49,12 @@ def armar_lista_final(tiros,numero_de_dados,cara_inicial,cara_final):
         dados_elegidos = elegir_dados(lista_auxiliar)
         numero_de_dados = numero_de_dados - len(dados_elegidos)
         lista_final.extend(dados_elegidos)
+
         tiros = tiros - 1
 
     while len(lista_final) < 5:
         print("Debe elegir mas dados.")
-        
+    
 
         if dados_elegidos == []:
             dados_elegidos = elegir_dados(lista_auxiliar)
@@ -57,10 +62,10 @@ def armar_lista_final(tiros,numero_de_dados,cara_inicial,cara_final):
         
         a = set(lista_auxiliar)
         b = set(dados_elegidos)
-        restantes = a.difference(b)
-        print(f"los restantes son: {list(restantes)}")
+        lista_auxiliar = list(a.difference(b))
+        print(f"los restantes son: {lista_auxiliar}")
 
-        dados_elegidos = elegir_dados(list(restantes))
+        dados_elegidos = elegir_dados(lista_auxiliar)
        
         lista_final.extend(dados_elegidos)
         
