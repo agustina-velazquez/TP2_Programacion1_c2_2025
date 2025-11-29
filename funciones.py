@@ -20,6 +20,7 @@ def tirar_dados(numero_de_dados, cara_inicial, cara_final):
 def elegir_dados(lista_auxiliar):
 
     dados_elegidos = []
+    posiciones_usadas = []
     
     for i in range(len(lista_auxiliar)):  
 
@@ -29,11 +30,20 @@ def elegir_dados(lista_auxiliar):
 
             return dados_elegidos
         
-        posicion = validaciones.validar_posicion(int(posicion), 0, len(lista_auxiliar)-1)
-    
+        posicion = validaciones.validar_rango_posicion(int(posicion), 0, len(lista_auxiliar)-1)
 
+        posicion = validaciones.validar_repeticion_de_posicion(posiciones_usadas, int(posicion))
+
+        posiciones_usadas.append(posicion)
+    
         dados_elegidos.append(lista_auxiliar[posicion])
+
+        
+
+
         print(f"los elegidos son: {dados_elegidos}")
+
+        
 
     return dados_elegidos
         
